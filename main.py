@@ -71,7 +71,7 @@ def plot_pca_3d(data, title, custom):
     dists = np.linalg.norm(X[:, None, :] - centroid_array[None, :, :], axis=2)
     labels_assign = np.argmin(dists, axis=1)
     
-    n_clusters = centroid_coords_pca.shape[0]
+    n_clusters = centroid_coords.shape[0]
 
     fig = go.Figure()
 
