@@ -57,9 +57,9 @@ def plot_pca_3d(data, title, custom):
     components_pca = pca.fit_transform(components)
 
     if custom:
-        centroid_coords = np.array([pca.transform(np.array([c.get_coords()]))[0] for c in best_optimized_centroids])
+        centroid_coords = np.array([pca.transform(np.array([c.get_coords()]))[0] for c in centroid_coords])
     else:
-        centroid_coords = np.array([pca.transform(c.reshape(1, -1))[0] for c in best_optimized_centroids])
+        centroid_coords = np.array([pca.transform(c.reshape(1, -1))[0] for c in centroid_coords])
 
     # Labels and assignments
     X = components
