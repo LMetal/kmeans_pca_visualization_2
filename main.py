@@ -47,7 +47,7 @@ def load_data(pickle_file):
 
 def plot_pca_3d(data, title, custom):
     components = data["X"]
-    centroid_coords = data["best_optimized_centroids"]
+    centroids = data["best_optimized_centroids"]
     cluster_labels = data["cluster_labels"]
     countries = data["countries"]
 
@@ -57,13 +57,18 @@ def plot_pca_3d(data, title, custom):
     components_pca = pca.fit_transform(components)
 
     if custom:
-        centroid_coords = np.array([pca.transform(np.array([c.get_coords()]))[0] for c in centroid_coords])
+        centroid_coords = np.array([pca.transform(np.array([c.get_coords()]))[0] for c in centroids])
     else:
-        centroid_coords = np.array([pca.transform(c.reshape(1, -1))[0] for c in centroid_coords])
+        centroid_coords = np.array([pca.transform(c.reshape(1, -1))[0] for c in centroids])
+
+    if custom:
+        centroid_array = np.array([c.get_coords() for c in results["best_optimized_centroids"]])  # nello spazio originale
+    else:
+        centroid_array = results["best_optimized_centroids"]
 
     # Labels and assignments
     X = components
-    dists = np.linalg.norm(X[:, None, :] - centroid_coords[None, :, :], axis=2)
+    dists = np.linalg.norm(X[:, None, :] - centroid_array[None, :, :], axis=2)
     labels_assign = np.argmin(dists, axis=1)
     
     n_clusters = centroid_coords_pca.shape[0]
