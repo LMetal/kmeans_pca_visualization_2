@@ -62,9 +62,9 @@ def plot_pca_3d(data, title, custom):
         centroid_coords = np.array([pca.transform(c.reshape(1, -1))[0] for c in centroids])
 
     if custom:
-        centroid_array = np.array([c.get_coords() for c in results["best_optimized_centroids"]])  # nello spazio originale
+        centroid_array = np.array([c.get_coords() for c in data["best_optimized_centroids"]])  # nello spazio originale
     else:
-        centroid_array = results["best_optimized_centroids"]
+        centroid_array = data["best_optimized_centroids"]
 
     # Labels and assignments
     X = components
