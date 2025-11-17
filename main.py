@@ -92,9 +92,9 @@ def plot_pca_3d(data, title, custom):
 
     if show_centroids:
         fig.add_trace(go.Scatter3d(
-            x=centroid_coords_pca[:, 0],
-            y=centroid_coords_pca[:, 1],
-            z=centroid_coords_pca[:, 2],
+            x=centroid_coords[:, 0],
+            y=centroid_coords[:, 1],
+            z=centroid_coords[:, 2],
             mode="markers",
             marker=dict(size=centroid_size, color="red", symbol="x"),
             name="Centroidi"
