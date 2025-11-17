@@ -3,6 +3,20 @@ import pickle
 import numpy as np
 import plotly.graph_objects as go
 
+class Centroid:
+    def __init__(self, nf):
+        self.coords = [None]*nf
+        self.nf = nf
+        
+    def move_to(self, new_coords):
+        tmp = self.coords
+        self.coords = new_coords
+        if tmp[0] != None:
+            return compute_distance(tmp, new_coords, NF,2)
+    
+    def get_coords(self):
+        return self.coords
+
 st.set_page_config(page_title="PCA & Clustering", layout="wide")
 st.title("📊 Visualizzazione PCA multipla")
 
