@@ -45,7 +45,7 @@ def load_data(pickle_file):
         data = pickle.load(f)
     return data
 
-def plot_pca_3d(data, title):
+def plot_pca_3d(data, title, custom):
     components = data["X"]
     centroid_coords = data["best_optimized_centroids"]
     cluster_labels = data["cluster_labels"]
@@ -56,8 +56,10 @@ def plot_pca_3d(data, title):
     pca = PCA(n_components=3)
     components_pca = pca.fit_transform(components)
 
-    # Calculate centroids in PCA space
-    centroid_coords_pca = np.array([pca.transform(c.reshape(1, -1))[0] for c in centroid_coords])
+    if custom:
+        centroid_coords = np.array([pca.transform(np.array([c.get_coords()]))[0] for c in best_optimized_centroids])
+    else:
+        centroid_coords = np.array([pca.transform(c.reshape(1, -1))[0] for c in best_optimized_centroids])
 
     # Labels and assignments
     X = components
@@ -107,9 +109,9 @@ data_sklearn = load_data(file_sklearn)
 
 # Display two plots: custom on top, sklearn on bottom
 st.subheader(f"PCA 3D - Clustering Custom ({cluster_choice})")
-fig_custom = plot_pca_3d(data_custom, f"PCA 3D - Custom Clustering ({cluster_choice})")
+fig_custom = plot_pca_3d(data_custom, f"PCA 3D - Custom Clustering ({cluster_choice})", True)
 st.plotly_chart(fig_custom, use_container_width=True)
 
 st.subheader(f"PCA 3D - Clustering Sklearn ({cluster_choice})")
-fig_sklearn = plot_pca_3d(data_sklearn, f"PCA 3D - Sklearn Clustering ({cluster_choice})")
+fig_sklearn = plot_pca_3d(data_sklearn, f"PCA 3D - Sklearn Clustering ({cluster_choice})", False)
 st.plotly_chart(fig_sklearn, use_container_width=True)
